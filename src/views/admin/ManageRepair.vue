@@ -8,7 +8,7 @@ const data = ref([]);
 
 onMounted(async () => {
   try {
-    const response = await axios.get("http://localhost:3000/api-repair");
+    const response = await axios.get("http://89.116.33.183:3000/api-repair");
     data.value = response.data;
   } catch (error) {
     console.error("Error fetching data:", error);
@@ -17,7 +17,7 @@ onMounted(async () => {
 
 const deleteData = async (id) => {
   try {
-    const response = await axios.delete(`http://localhost:3000/api-repair/delete-repair/${id}`);
+    const response = await axios.delete(`http://89.116.33.183:3000/api-repair/delete-repair/${id}`);
     if (response.status === 200) {
       router.go();
     }

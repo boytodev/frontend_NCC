@@ -4,7 +4,7 @@ import { ref, onMounted } from "vue";
 
 onMounted(async () => {
   try {
-    const response = await axios.get("http://localhost:3000/api-repair");
+    const response = await axios.get("http://89.116.33.183:3000/api-repair");
     data.value = response.data;
   } catch (error) {
     console.error("Error fetching data:", error);

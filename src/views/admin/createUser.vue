@@ -13,7 +13,7 @@ const data = ref({
 
 const register = async () => {
     try {
-        const apiURL = "http://localhost:3000/api-user/register"; // ✅ แก้พอร์ตให้ถูกต้อง
+        const apiURL = "http://89.116.33.183:3000/api-user/register"; // ✅ แก้พอร์ตให้ถูกต้อง
         const token = localStorage.getItem("accessToken"); // ✅ ใช้ token ในกรณีที่ admin ต้องเพิ่ม user
 
         const response = await axios.post(apiURL, data.value, {

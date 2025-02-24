@@ -9,7 +9,7 @@ const data = ref([]);
 const pcList = ref(Array.from({ length: 30 }, (_, i) => `PC-${String(i + 1).padStart(3, "0")}`));
 onMounted(async () => {
     try {
-        const apiURL = `http://localhost:3000/api-repair/edit-repair/${route.params.id}`;
+        const apiURL = `http://89.116.33.183:3000/api-repair/edit-repair/${route.params.id}`;
         const response = await axios.get(apiURL);
         data.value = response.data;
     } catch (error) {
@@ -19,7 +19,7 @@ onMounted(async () => {
 
 const updateData = async () => {
     try {
-        const apiURL = `http://localhost:3000/api-repair/update-repair/${route.params.id}`;
+        const apiURL = `http://89.116.33.183:3000/api-repair/update-repair/${route.params.id}`;
         const response = await axios.put(apiURL, data.value);
         if (response.status === 200) {
             router.push('/admin/manage-repair');

@@ -17,7 +17,7 @@ const navigation = computed(() => [
 // ฟังก์ชันออกจากระบบ
 const logout = async () => {
     try {
-        await axios.post("http://localhost:3000/api-user/logout", {}, {
+        await axios.post("http://89.116.33.183:3000/api-user/logout", {}, {
             withCredentials: true, // ✅ ให้ Axios ส่ง Cookie อัตโนมัติ
         });
 

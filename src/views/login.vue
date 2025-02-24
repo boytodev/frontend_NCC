@@ -14,7 +14,7 @@ const login = async () => {
     try {
         console.log("📤 Data being sent:", { ...data.value });
 
-        const response = await axios.post("http://localhost:3000/api-user/login", data.value, {
+        const response = await axios.post("http://89.116.33.183:3000/api-user/login", data.value, {
             withCredentials: true, // ✅ ให้ Axios จัดการ cookies อัตโนมัติ
         });
 

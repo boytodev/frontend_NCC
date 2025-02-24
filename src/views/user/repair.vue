@@ -22,7 +22,7 @@ const saveData = async () => {
         console.log('Data being sent:', { ...data.value });
 
         // ส่งข้อมูลไปที่ API ด้วย Axios
-        const response = await axios.post('http://localhost:3000/api-repair/create-repair', data.value);
+        const response = await axios.post('http://89.116.33.183:3000/api-repair/create-repair', data.value);
 
         // ตรวจสอบผลการบันทึกข้อมูล
         if (response.status === 200) {
