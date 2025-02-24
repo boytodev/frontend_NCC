@@ -1,0 +1,4 @@
+@import "tailwindcss";
+.vue-devtools__anchor--glowing {
+  display: none !important;
+}
