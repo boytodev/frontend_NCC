@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
+import { jwtDecode } from "jwt-decode";
 
 // Layouts
 import userLayout from "../layouts/userLayout.vue";
@@ -49,5 +50,37 @@ const router = createRouter({
   history: createWebHistory(),
   routes,
 });
+
+router.beforeEach((to, from, next) => {
+  let token = localStorage.getItem('accessToken')
+
+  // ถ้า token เป็น null หรือ undefined ให้ใช้ค่าเป็น "" (string ว่าง)
+  if (!token || typeof token !== 'string') {
+    token = "";
+  }
+
+  // ป้องกันไม่ให้เข้าหน้า Protected ถ้าไม่มี Token
+  if (to.meta.requiresAuth && !token) {
+    return next('/login') // 🔥 ส่งไปหน้า Login ถ้าไม่มี Token
+  }
+
+  // ป้องกันไม่ให้เข้าหน้า Login ถ้ามี Token
+  if (to.path === "/login" && token) {
+    try {
+      const decoded = jwtDecode(token);
+      if (decoded.role === "admin" || decoded.role === "technician") {
+        return next('/admin')
+      } else {
+        return next('/user')
+      }
+    } catch (error) {
+      console.error("❌ Decode token failed:", error);
+      return next('/login'); // 🔥 ถ้า Decode ไม่ได้ ให้ไปหน้า Login
+    }
+  }
+
+  next()
+})
+
 
 export default router;

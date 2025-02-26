@@ -12,19 +12,13 @@ const data = ref({
 const formRef = ref(null); // อ้างอิงฟอร์มเพื่อรีเซ็ต
 const login = async () => {
     try {
-        console.log("📤 Data being sent:", { ...data.value });
 
-        const response = await axios.post("http://89.116.33.183:3000/api-user/login", data.value, {
+        const response = await axios.post("https://ncc-api.ncc-computerrepair.com/api-user/login", data.value, {
             withCredentials: true, // ✅ ให้ Axios จัดการ cookies อัตโนมัติ
         });
 
-        console.log("✅ Response Data:", response.data);
-
         if (response.status === 200) {
             const { accessToken, User, Role } = response.data;
-
-            console.log("🔍 Extracted Role:", Role);
-            console.log("🔍 Extracted User:", User);
 
             if (!Role) {
                 console.error("❌ Role is missing in response!");
@@ -40,7 +34,7 @@ const login = async () => {
                 showConfirmButton: false,
                 timer: 1500,
             }).then(() => {
-                router.push(Role === "admin" ? "/admin" : "/user");
+                router.push(Role === "admin" ||"technician" ? "/admin" : "/user");
             });
         }
     } catch (error) {

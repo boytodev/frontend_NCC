@@ -43,7 +43,7 @@ const savePassword = async () => {
 
     try {
         const response = await axios.put(
-            `http://89.116.33.183:3000/api-user/change-password/${decoded.userId}`,
+            `https://ncc-api.ncc-computerrepair.com/api-user/change-password/${decoded.userId}`,
             { oldPassword: oldPassword.value, newPassword: newPassword.value },
             { headers: { Authorization: `Bearer ${token}` } }
         );

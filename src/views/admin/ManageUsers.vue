@@ -8,7 +8,7 @@ const users = ref([]);
 
 onMounted(async () => {
     try {
-        const response = await axios.get("http://89.116.33.183:3000/api-user");
+        const response = await axios.get("https://ncc-api.ncc-computerrepair.com/api-user");
         users.value = response.data;
     } catch (error) {
         console.error("Error fetching data:", error);
@@ -40,7 +40,7 @@ const deleteData = async (id) => {
     if (!confirmDelete.isConfirmed) return;
 
     try {
-        const response = await axios.delete(`http://89.116.33.183:3000/api-user/delete/${id}`, {
+        const response = await axios.delete(`https://ncc-api.ncc-computerrepair.com/api-user/delete/${id}`, {
             headers: { Authorization: `Bearer ${token}` },
         });
 

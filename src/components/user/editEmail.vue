@@ -23,7 +23,7 @@ const closeEditModal = () => {
 
 onMounted(async () => {
     try {
-        const response = await axios.get(`http://89.116.33.183:3000api-user/edit/${decoded.userId}`);
+        const response = await axios.get(`https://ncc-api.ncc-computerrepair.com/api-user/edit/${decoded.userId}`);
         email.value = response.data.email;
 
     } catch (error) {
@@ -45,7 +45,7 @@ const UpdateEmail = async () => {
             return;
         }
 
-        const apiURL = `http://89.116.33.183:3000api-user/update/${decoded.userId}`;
+        const apiURL = `https://ncc-api.ncc-computerrepair.com/api-user/update/${decoded.userId}`;
         axios.put(apiURL, { email: newEmail.value });
         Swal.fire("บันทึกสำเร็จ!", "อีเมลของคุณได้รับการอัปเดต", "success");
         email.value = newEmail.value;

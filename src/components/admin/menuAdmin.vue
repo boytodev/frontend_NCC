@@ -5,20 +5,43 @@ import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuIt
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/vue/24/outline'
 import axios from 'axios'
 import Swal from 'sweetalert2'
+import { jwtDecode } from 'jwt-decode'
 
 const router = useRouter()
 
-const navigation = computed(() => [
-    { name: 'หน้าหลัก', href: '/admin', current: router.currentRoute.value.path === '/admin' },
-    { name: 'จัดการผู้ใช้', href: '/admin/manage-users', current: router.currentRoute.value.path === '/admin/manage-users' },
-    { name: 'รายการแจ้งซ่อม', href: '/admin/manage-repair', current: router.currentRoute.value.path === '/admin/manage-repair' },
-    { name: 'การตั้งค่า', href: '/admin/adminSetting', current: router.currentRoute.value.path === '/admin/adminSetting' },
-])
+
+const navigation = computed(() => {
+    let token = localStorage.getItem("accessToken");
+    let decoded = null;
+
+    // ✅ ตรวจสอบว่า token เป็น string จริง ๆ และไม่ใช่ค่าว่าง
+    if (token && typeof token === "string" && token.trim() !== "") {
+        try {
+            decoded = jwtDecode(token);
+        } catch (error) {
+            console.error("❌ Invalid Token:", error);
+            localStorage.removeItem("accessToken"); // ✅ ลบ Token ที่ไม่ถูกต้อง
+            token = null;
+        }
+    }
+
+    const role = decoded?.role || "guest"; // ✅ ตั้งค่า role เป็น 'guest' ถ้าไม่มี token
+
+    const menu = [
+        { name: 'หน้าหลัก', href: '/admin', current: router.path === '/admin' },
+        { name: 'จัดการผู้ใช้', href: '/admin/manage-users', current: router.path === '/admin/manage-users', role: 'admin' },
+        { name: 'รายการแจ้งซ่อม', href: '/admin/manage-repair', current: router.path === '/admin/manage-repair' },
+        { name: 'การตั้งค่า', href: '/admin/adminSetting', current: router.path === '/admin/adminSetting' },
+    ];
+
+    // ✅ กรองเมนูตาม role (แสดงเฉพาะเมนูที่ role มีสิทธิ์เข้าถึง)
+    return menu.filter(item => !item.role || item.role === role);
+});
 
 // ฟังก์ชันออกจากระบบ
 const logout = async () => {
     try {
-        await axios.post("http://89.116.33.183:3000/api-user/logout", {}, {
+        await axios.post("https://ncc-api.ncc-computerrepair.com/api-user/logout", {}, {
             withCredentials: true, // ✅ ให้ Axios ส่ง Cookie อัตโนมัติ
         });
 
